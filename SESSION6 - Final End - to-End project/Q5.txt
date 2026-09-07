@@ -1,0 +1,28 @@
+Q - 5 
+5.  Write a short explanation (5-7 sentences) describing your project workflow: 
+    how data flows from the frontend to the API, how the model is used for prediction, 
+    and how the result is shown to the user.
+
+answer:
+======
+
+
+This project uses a machine learning model to predict whether a Flipkart product review 
+is Positive or Negative.
+
+First, sample product reviews are used to train a Logistic Regression
+model with TF-IDF text features. 
+
+The trained model is saved as `review_sentiment_model.pkl`.
+
+Next, a Flask API loads the saved model and receives review text through a POST request in 
+JSON format. 
+
+The API sends the review to the machine learning model and returns either a Positive or 
+Negative prediction. 
+
+The HTML frontend uses JavaScript `fetch()` to send the review to the Flask API without
+reloading the page. 
+
+Finally, the Flask application and HTML frontend are deployed online using Render, where users
+can enter reviews and get sentiment predictions.

@@ -1,0 +1,186 @@
+<!-- 
+ Q - 3
+
+ 3.   Create a simple HTML frontend (review_predictor.html) with a text box for the user to enter
+      a product review and a 'Predict' button that calls your Flask API and displays the prediction
+      result without reloading the page.<br><br><em><strong>Hint:</strong> Use JavaScript fetch() 
+      to send the review to your API and update the result in the DOM.</em>
+
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Flipkart Review Predictor</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: white;
+            width: 450px;
+            padding: 30px;
+
+            border-radius: 10px;
+
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+
+            text-align: center;
+        }
+
+        h1 {
+            color: #2874f0;
+        }
+
+        textarea {
+            width: 100%;
+            height: 120px;
+
+            padding: 10px;
+
+            margin-top: 15px;
+
+            box-sizing: border-box;
+
+            border: 1px solid #ccc;
+            border-radius: 5px;
+
+            resize: none;
+
+            font-size: 15px;
+        }
+
+        button {
+            margin-top: 15px;
+
+            padding: 12px 30px;
+
+            background: #2874f0;
+            color: white;
+
+            border: none;
+            border-radius: 5px;
+
+            cursor: pointer;
+
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #1255c5;
+        }
+
+        #result {
+            margin-top: 20px;
+
+            font-size: 22px;
+
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <div class="container">
+
+        <h1>Flipkart Review Predictor</h1>
+
+        <p>Enter your product review:</p>
+
+        <textarea id="review" placeholder="Example: Product quality is excellent">
+        </textarea>
+
+        <br>
+
+        <button onclick="predictReview()">
+            Predict
+        </button>
+
+        <div id="result"></div>
+
+    </div>
+
+
+    <script>
+
+        async function predictReview() {
+
+            const review =
+                document.getElementById("review").value;
+
+            const result =
+                document.getElementById("result");
+
+
+            // Check empty review
+            if (review.trim() === "") {
+
+                result.innerHTML =
+                    "Please enter a review.";
+
+                return;
+            }
+
+
+            try {
+
+                // Send review to Flask API
+                const response = await fetch(
+                    "/predict",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            review: review
+                        })
+                    }
+                );
+
+
+                const data =
+                    await response.json();
+
+
+                // Display prediction
+                result.innerHTML =
+                    "Prediction: " + data.prediction;
+
+            }
+
+
+            catch (error) {
+
+                result.innerHTML =
+                    "Error connecting to Flask API.";
+
+                console.error(error);
+            }
+
+        }
+
+    </script>
+
+</body>
+
+</html>

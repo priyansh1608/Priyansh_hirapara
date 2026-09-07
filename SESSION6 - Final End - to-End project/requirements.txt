@@ -1,0 +1,10 @@
+# Q - 4 
+# 4.  Deploy your Flask app and HTML frontend to PythonAnywhere (or any free cloud platform), 
+#    then test your live project by submitting at least 3 different reviews and recording the 
+#    predictions you get.
+
+Flask
+flask-cors
+pandas
+scikit-learn
+gunicorn
